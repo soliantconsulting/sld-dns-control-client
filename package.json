@@ -1,0 +1,54 @@
+{
+    "name": "@soliantconsulting/sld-dns-control-client",
+    "version": "0.0.0",
+    "description": "Client library and CLI for the Soliant Dev DNS control API",
+    "author": "Soliant Consulting",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/soliantconsulting/sld-dns-control-client.git"
+    },
+    "type": "module",
+    "sideEffects": false,
+    "files": [
+        "dist/**/*"
+    ],
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.ts",
+                "default": "./dist/index.js"
+            }
+        }
+    },
+    "bin": {
+        "sld-dns-control": "./dist/cli.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit",
+        "cli": "tsx src/cli.ts",
+        "format": "biome format . --write",
+        "check": "biome check . --write"
+    },
+    "dependencies": {
+        "@aws-sdk/client-acm": "^3.1045.0",
+        "@aws-sdk/client-cloudformation": "^3.1045.0",
+        "@azure/msal-node": "^5.2.0",
+        "@commander-js/extra-typings": "^14.0.0",
+        "commander": "^14.0.0",
+        "env-paths": "^4.0.0",
+        "zod": "^4.4.3"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "^2.2.2",
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "@tsconfig/node24": "^24.0.4",
+        "@types/node": "^24.3.0",
+        "lefthook": "^1.12.3",
+        "tsx": "^4.20.5",
+        "typescript": "^5.9.2"
+    },
+    "packageManager": "pnpm@11.0.9+sha512.34ce82e6780233cf9cad8685029a8f81d2e06196c5a9bad98879f7424940c6817c4e4524fb7d38b8553ceed48b9758b8ebaf1abd3600c232c4c8cf7366086f38"
+}
