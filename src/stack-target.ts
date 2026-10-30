@@ -23,7 +23,7 @@ export const resolveStackTarget = async (options: StackTargetOptions): Promise<s
 
     if (!target) {
         throw new Error(
-            `Stack ${options.stackName} has no DistributionDomainName or *LoadBalancerDNS output`,
+            `Stack ${options.stackName} has no DistributionDomainName or *LoadBalancerDNS[hash] output`,
         );
     }
 
@@ -37,6 +37,11 @@ const pickTargetOutput = (outputs: Output[]): string | null => {
         return explicit.OutputValue;
     }
 
-    const albOutput = outputs.find((output) => output.OutputKey?.endsWith("LoadBalancerDNS"));
+    // CDK suffixes the logical id of an output made inside a construct with an 8-character
+    // hash, so ApplicationLoadBalancedFargateService's output is "ServiceLoadBalancerDNSEC5B149E",
+    // not "ServiceLoadBalancerDNS".
+    const albOutput = outputs.find((output) =>
+        /LoadBalancerDNS(?:[0-9A-F]{8})?$/.test(output.OutputKey ?? ""),
+    );
     return albOutput?.OutputValue ?? null;
 };
